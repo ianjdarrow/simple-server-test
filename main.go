@@ -12,6 +12,9 @@ func main() {
 		log.Fatalf("PORT environment variable is required")
 	}
 	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("OK"))
+	})
 	mux.HandleFunc("/{content...}", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello, World!" + port + "\n" + r.PathValue("content")))
 	})
